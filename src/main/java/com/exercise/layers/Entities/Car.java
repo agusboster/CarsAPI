@@ -1,24 +1,27 @@
 package com.exercise.layers.Entities;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
-public class Car {
+public class Car implements Serializable {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Integer id;
     private String model;
     private String type;
+    private Float basicPrice;
     @Transient
     private List<Optional> optionals;
 
-    public Car(Integer _id, String _model, String _type, List<Optional> _optionals) {
+    public Car(Integer _id, String _model, String _type, Float _basicPrice) {
         super();
         this.id = _id;
         this.model = _model;
         this.type = _type;
-        this.optionals = _optionals;
+        //this.optionals = _optionals;
+        this.basicPrice = _basicPrice;
     }
 
 
@@ -44,6 +47,14 @@ public class Car {
 
     public void setType(String newType) {
         this.type = newType;
+    }
+
+    public Float getBasicPrice() {
+        return basicPrice;
+    }
+
+    public void setOBasicPrice(Float newBasicPrice) {
+        this.basicPrice = newBasicPrice;
     }
 
     public List getOptionals() {
