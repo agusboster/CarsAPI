@@ -2,6 +2,7 @@ package com.exercise.layers.ServiceLayer;
 
 import com.exercise.layers.Entities.Car;
 import com.exercise.layers.Entities.Optional;
+import com.exercise.layers.Exceptions.CarException;
 import com.exercise.layers.RepositoryLayer.CarRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,17 +25,35 @@ public class CarServiceImpl implements CarService {
     }
 
 
-
-    public void saveCar(Car _car) {
-
+    public Car saveCar(Car _car) {
+        if(_car.getId() != null){
+            _car.setId(null);
+        }
+        updateOrSaveOptionals(_car.getId(), _car.getOptionals());
+        return carRepository.save(_car);
     }
 
-    public void deleteCar(String id) {
-
+    public void deleteCar(Integer _carId) throws CarException{
+        java.util.Optional<Car> carAux = carRepository.findById(_carId);
+        if(carAux.isEmpty()){
+            throw new CarException("The car with id " + _carId + " didn't exist before the request. The deleting" +
+                    "operation is not necessary.");
+        }
+        carRepository.deleteById(_carId);
     }
 
-    public void updateCar(Car _car) {
-
+    public Car updateCar(Car _car) throws CarException {
+        java.util.Optional<Car> carAux = carRepository.findById(_car.getId());
+        if(carAux.isEmpty()){
+            if(_car.getId() == null){
+                throw new CarException("Please provide the car Id that you would like to update.");
+            } else{
+                throw new CarException("There is no existing car in the db with id "
+                        + _car.getId() + " to update.");
+            }
+        }
+        updateOrSaveOptionals(_car.getId(), _car.getOptionals());
+        return carRepository.save(_car);
     }
 
     ///Manejar la posible exception en el controller
@@ -56,6 +75,9 @@ public class CarServiceImpl implements CarService {
         _car.setOptionals(carOptionals);
     }
 
+    public void updateOrSaveOptionals(Integer _carId, List<Optional> _carOptionals){
+        optionalService.updateOrSaveCarOptionals(_carId, _carOptionals);
+    }
 
 
 }

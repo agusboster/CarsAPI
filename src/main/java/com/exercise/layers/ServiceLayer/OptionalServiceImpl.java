@@ -1,6 +1,8 @@
 package com.exercise.layers.ServiceLayer;
 
 import com.exercise.layers.Entities.Optional;
+import com.exercise.layers.Exceptions.CarException;
+import com.exercise.layers.Exceptions.OptionalException;
 import com.exercise.layers.RepositoryLayer.OptionalRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,4 +28,20 @@ public class OptionalServiceImpl implements OptionalService {
         iterableOptionals.forEach(optional -> optionals.add(optional));
         return optionals;
     }
+
+    public void updateOrSaveCarOptionals(Integer _carId, List<Optional> _carOptionals){
+        if(!_carOptionals.isEmpty()){
+            _carOptionals.forEach(optional -> updateOrSaveOptionalByCar(_carId, optional));
+            }
+        }
+
+
+    public void updateOrSaveOptionalByCar(Integer _carId, Optional _carOptional){
+        java.util.Optional<Optional> optionalAux = optionalRepo.findByNameAndCarId(_carId, _carOptional.getName());
+        if(optionalAux.isEmpty()){
+            _carOptional.setId(null);
+        }
+        optionalRepo.save(_carOptional);
+    }
+
 }
