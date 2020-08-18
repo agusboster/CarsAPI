@@ -1,13 +1,17 @@
 package com.exercise.layers.ControllerLayer;
 
 import com.exercise.layers.Entities.Car;
+import com.exercise.layers.Entities.CarStat;
+import com.exercise.layers.Entities.OptionalStat;
 import com.exercise.layers.Exceptions.CarException;
 import com.exercise.layers.ServiceLayer.CarService;
+import com.exercise.layers.ServiceLayer.OptionalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,10 +19,12 @@ import java.util.Optional;
 @RequestMapping("/carsAPI")
 public class CarController {
     private CarService carService;
+    private OptionalService optionalService;
 
     @Autowired
-    public CarController(CarService _carService){
+    public CarController(CarService _carService, OptionalService _optionalService){
         this.carService=_carService;
+        this.optionalService=_optionalService;
     }
 
     @PostMapping(path = "/", consumes = "application/json", produces = {"application/json"})
@@ -92,6 +98,16 @@ public class CarController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("There is not any car with id " + _id);
         }
 
+    }
+
+    @GetMapping(path = "/stats", consumes = "application/json", produces = {"application/json"})
+    public ResponseEntity<Object> getStats(){
+        List<CarStat> carsStats = carService.getCarsStats();
+        List<OptionalStat> optionalStats = optionalService.getOptionalsStats();
+        List<Object> stats = new ArrayList<>();
+        stats.add(carsStats);
+        stats.add(optionalStats);
+        return ResponseEntity.status(HttpStatus.OK).body(stats);
     }
 
 

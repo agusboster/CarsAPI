@@ -1,6 +1,7 @@
 package com.exercise.layers.ServiceLayer;
 
 import com.exercise.layers.Entities.Car;
+import com.exercise.layers.Entities.CarStat;
 import com.exercise.layers.Entities.Optional;
 import com.exercise.layers.Exceptions.CarException;
 import com.exercise.layers.RepositoryLayer.CarRepository;
@@ -94,6 +95,10 @@ public class CarServiceImpl implements CarService {
 
     public void updateOrSaveOptionals(Integer _carId, List<Optional> _carOptionals){
         optionalService.updateOrSaveCarOptionals(_carId, _carOptionals);
+    }
+
+    public List<CarStat> getCarsStats() {
+        return null;
     }
 
 

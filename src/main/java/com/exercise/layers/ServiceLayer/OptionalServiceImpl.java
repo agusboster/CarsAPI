@@ -1,6 +1,7 @@
 package com.exercise.layers.ServiceLayer;
 
 import com.exercise.layers.Entities.Optional;
+import com.exercise.layers.Entities.OptionalStat;
 import com.exercise.layers.RepositoryLayer.OptionalRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -47,6 +48,10 @@ public class OptionalServiceImpl implements OptionalService {
         AtomicReference<Float> valorFinal = new AtomicReference<>(Float.valueOf(0));
         optionals.forEach(optional -> valorFinal.updateAndGet(v -> v + optional.getPrice()));
         return valorFinal.get();
+    }
+
+    public List<OptionalStat> getOptionalsStats() {
+        return null;
     }
 
 }

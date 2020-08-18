@@ -1,6 +1,7 @@
 package com.exercise.layers.ServiceLayer;
 
 import com.exercise.layers.Entities.Optional;
+import com.exercise.layers.Entities.OptionalStat;
 
 import java.util.List;
 
@@ -10,4 +11,5 @@ public interface OptionalService {
     void updateOrSaveCarOptionals(Integer _carId, List<Optional> _carOptionals);
     void updateOrSaveOptionalByCar(Integer _carId, Optional _carOptional);
     Float getOptionalsPrice(List<Optional> optionals);
+    List<OptionalStat> getOptionalsStats();
 }
