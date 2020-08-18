@@ -1,7 +1,7 @@
 package com.exercise.layers.ServiceLayer;
 
 import com.exercise.layers.Entities.Car;
-import com.exercise.layers.Entities.CarStat;
+import com.exercise.layers.Entities.Stat;
 import com.exercise.layers.Exceptions.CarException;
 
 import java.util.List;
@@ -17,5 +17,5 @@ public interface CarService {
     Float getCarPrice(Integer _id) throws CarException;
     void addOptionals(Car _car);
     void updateOrSaveOptionals(Integer _carId, List<com.exercise.layers.Entities.Optional> _carOptionals);
-    List<CarStat> getCarsStats();
+    List<Stat> getCarsStats();
 }

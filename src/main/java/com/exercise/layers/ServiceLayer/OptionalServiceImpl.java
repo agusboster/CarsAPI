@@ -1,7 +1,7 @@
 package com.exercise.layers.ServiceLayer;
 
 import com.exercise.layers.Entities.Optional;
-import com.exercise.layers.Entities.OptionalStat;
+import com.exercise.layers.Entities.Stat;
 import com.exercise.layers.RepositoryLayer.OptionalRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,6 +29,13 @@ public class OptionalServiceImpl implements OptionalService {
         return optionals;
     }
 
+    public List<Optional> getAllOptionals() {
+        Iterable<Optional> optionalsAux = optionalRepo.findAll();
+        List<Optional> optionals = new ArrayList<>();
+        optionalsAux.forEach(optional -> optionals.add(optional));
+        return optionals;
+    }
+
     public void updateOrSaveCarOptionals(Integer _carId, List<Optional> _carOptionals){
         if(!_carOptionals.isEmpty()){
             _carOptionals.forEach(optional -> updateOrSaveOptionalByCar(_carId, optional));
@@ -50,7 +57,7 @@ public class OptionalServiceImpl implements OptionalService {
         return valorFinal.get();
     }
 
-    public List<OptionalStat> getOptionalsStats() {
+    public List<Stat> getOptionalsStats() {
         return null;
     }
 

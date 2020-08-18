@@ -1,8 +1,8 @@
 package com.exercise.layers.ControllerLayer;
 
 import com.exercise.layers.Entities.Car;
-import com.exercise.layers.Entities.CarStat;
-import com.exercise.layers.Entities.OptionalStat;
+import com.exercise.layers.Entities.Stat;
+import com.exercise.layers.Entities.StatsDTO;
 import com.exercise.layers.Exceptions.CarException;
 import com.exercise.layers.ServiceLayer.CarService;
 import com.exercise.layers.ServiceLayer.OptionalService;
@@ -102,11 +102,15 @@ public class CarController {
 
     @GetMapping(path = "/stats", consumes = "application/json", produces = {"application/json"})
     public ResponseEntity<Object> getStats(){
-        List<CarStat> carsStats = carService.getCarsStats();
-        List<OptionalStat> optionalStats = optionalService.getOptionalsStats();
-        List<Object> stats = new ArrayList<>();
-        stats.add(carsStats);
-        stats.add(optionalStats);
+        StatsDTO stats = new StatsDTO();
+        List<Stat> carsStats = carService.getCarsStats();
+        List<Stat> optionalStats = optionalService.getOptionalsStats();
+        int carsCount = carService.getAllCars().get().size();
+        int optionalsCount = optionalService.getAllOptionals().size();
+        stats.setCars(carsStats);
+        stats.setOptionals(optionalStats);
+        stats.setCarsCount(carsCount);
+        stats.setOptionalsCount(optionalsCount);
         return ResponseEntity.status(HttpStatus.OK).body(stats);
     }
 

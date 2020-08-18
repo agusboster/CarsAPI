@@ -1,8 +1,8 @@
 package com.exercise.layers.ServiceLayer;
 
 import com.exercise.layers.Entities.Car;
-import com.exercise.layers.Entities.CarStat;
 import com.exercise.layers.Entities.Optional;
+import com.exercise.layers.Entities.Stat;
 import com.exercise.layers.Exceptions.CarException;
 import com.exercise.layers.RepositoryLayer.CarRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -97,7 +97,7 @@ public class CarServiceImpl implements CarService {
         optionalService.updateOrSaveCarOptionals(_carId, _carOptionals);
     }
 
-    public List<CarStat> getCarsStats() {
+    public List<Stat> getCarsStats() {
         return null;
     }
 
