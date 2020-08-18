@@ -9,7 +9,7 @@ import java.util.Optional;
 public interface CarService {
 
     public Optional<List<Car>> getAllCars();
-    public Optional<Car> findById(Integer id) throws CarException;
+    public Optional<Car> findById(Integer id);
     public Car saveCar(Car _car);
     public void deleteCar(Integer _carId) throws CarException;
     public Car updateCar(Car _car) throws CarException;

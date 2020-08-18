@@ -4,7 +4,6 @@ import com.exercise.layers.Entities.Optional;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
-import java.nio.file.DirectoryIteratorException;
 
 public interface OptionalRepository extends CrudRepository<Optional, Integer> {
 
