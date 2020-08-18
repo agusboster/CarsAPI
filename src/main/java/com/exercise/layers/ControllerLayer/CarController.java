@@ -21,30 +21,10 @@ public class CarController {
         this.carService=_carService;
     }
 
-    @GetMapping(path = "/cars", consumes = "application/json", produces = {"application/json"})
-    public ResponseEntity<Object> getAllCars(){
-        Optional<List<Car>> carsAux = carService.getAllCars();
-        try {
-            List<Car> cars = carsAux.get();
-            return ResponseEntity.status(HttpStatus.OK).body(cars);
-        } catch (Exception e){
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Something went wrong. Error message: " + e.getMessage());
-        }
-    }
-
-    @GetMapping(path = "/{_id}", produces = {"application/json"})
-    public ResponseEntity<Object> getCarById(@PathVariable("_id") String _id){
-        if(_id.isBlank()){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Car id should be provided.");
-        }
-        Integer carId = Integer.valueOf(_id);
-        Optional<Car> carAux = carService.findById(carId);
-        try {
-            Car car = carAux.get();
-            return ResponseEntity.status(HttpStatus.OK).body(car);
-        } catch (Exception e){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("There is not any car with id " + _id);
-        }
+    @PostMapping(path = "/", consumes = "application/json", produces = {"application/json"})
+    public ResponseEntity<Object> saveCar (@RequestBody Car newCar){
+        Car savedCar = carService.saveCar(newCar);
+        return ResponseEntity.status(HttpStatus.OK).body(savedCar);
     }
 
     @PutMapping(path = "/", consumes = "application/json", produces = {"application/json"})
@@ -71,10 +51,50 @@ public class CarController {
         }
     }
 
-    @PostMapping(path = "/", consumes = "application/json", produces = {"application/json"})
-    public ResponseEntity<Object> saveCar (@RequestBody Car newCar){
-        Car savedCar = carService.saveCar(newCar);
-        return ResponseEntity.status(HttpStatus.OK).body(savedCar);
+
+    @GetMapping(path = "/{_id}", produces = {"application/json"})
+    public ResponseEntity<Object> getCarById(@PathVariable("_id") String _id){
+        if(_id.isBlank()){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Car id should be provided.");
+        }
+        Integer carId = Integer.valueOf(_id);
+        Optional<Car> carAux = carService.findById(carId);
+        try {
+            Car car = carAux.get();
+            return ResponseEntity.status(HttpStatus.OK).body(car);
+        } catch (Exception e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("There is not any car with id " + _id);
+        }
     }
+
+
+    @GetMapping(path = "/cars", consumes = "application/json", produces = {"application/json"})
+    public ResponseEntity<Object> getAllCars(){
+        Optional<List<Car>> carsAux = carService.getAllCars();
+        try {
+            List<Car> cars = carsAux.get();
+            return ResponseEntity.status(HttpStatus.OK).body(cars);
+        } catch (Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Something went wrong. Error message: " + e.getMessage());
+        }
+    }
+
+    @GetMapping(path = "/carPrice/{_id}", consumes = "application/json", produces = {"application/json"})
+    public ResponseEntity<Object> getCarPrice(@PathVariable("_id") String _id){
+        if(_id.isBlank()){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Car id should be provided.");
+        }
+        Integer carId = Integer.valueOf(_id);
+        try {
+            Float carPrice = carService.getCarPrice(carId);
+            return ResponseEntity.status(HttpStatus.OK).body(carPrice);
+        } catch (CarException e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("There is not any car with id " + _id);
+        }
+
+    }
+
+
+
 
 }

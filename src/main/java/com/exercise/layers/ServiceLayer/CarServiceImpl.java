@@ -56,9 +56,26 @@ public class CarServiceImpl implements CarService {
         return carRepository.save(_car);
     }
 
+    public Float getCarPrice(Integer _id) throws CarException{
+        java.util.Optional<Car> carAux = findById(_id);
+        if(carAux.isEmpty()){
+            throw new CarException("There is not any car with id " + _id);
+        }
+        Float basicPrice = carAux.get().getBasicPrice();
+        Float optionalsPrice = optionalService.getOptionalsPrice(carAux.get().getOptionals());
+
+        return basicPrice + optionalsPrice;
+    }
+
     ///Manejar la posible exception en el controller
     public java.util.Optional<Car> findById(Integer _carId){
-        return carRepository.findById(_carId);
+        java.util.Optional<Car> carAux = carRepository.findById(_carId);
+        if(carAux.isEmpty()){
+            return carAux;
+        }
+        Car car = carAux.get();
+        addOptionals(car);
+        return java.util.Optional.ofNullable(car);
     }
 
     //Manejar la posible exception en el controller

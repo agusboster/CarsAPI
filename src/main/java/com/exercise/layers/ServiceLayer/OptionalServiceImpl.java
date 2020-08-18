@@ -1,8 +1,6 @@
 package com.exercise.layers.ServiceLayer;
 
 import com.exercise.layers.Entities.Optional;
-import com.exercise.layers.Exceptions.CarException;
-import com.exercise.layers.Exceptions.OptionalException;
 import com.exercise.layers.RepositoryLayer.OptionalRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 @Service("optionalService")
 @Transactional
@@ -42,6 +41,12 @@ public class OptionalServiceImpl implements OptionalService {
             _carOptional.setId(null);
         }
         optionalRepo.save(_carOptional);
+    }
+
+    public Float getOptionalsPrice(List<Optional> optionals) {
+        AtomicReference<Float> valorFinal = new AtomicReference<>(Float.valueOf(0));
+        optionals.forEach(optional -> valorFinal.updateAndGet(v -> v + optional.getPrice()));
+        return valorFinal.get();
     }
 
 }
