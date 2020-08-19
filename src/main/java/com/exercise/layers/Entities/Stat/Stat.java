@@ -1,4 +1,4 @@
-package com.exercise.layers.Entities;
+package com.exercise.layers.Entities.Stat;
 
 public class Stat {
     private String name;

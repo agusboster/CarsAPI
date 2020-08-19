@@ -1,4 +1,4 @@
-package com.exercise.layers.Entities;
+package com.exercise.layers.Entities.Optional;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

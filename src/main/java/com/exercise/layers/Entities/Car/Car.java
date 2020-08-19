@@ -1,4 +1,6 @@
-package com.exercise.layers.Entities;
+package com.exercise.layers.Entities.Car;
+
+import com.exercise.layers.Entities.Optional.Optional;
 
 import javax.persistence.*;
 import java.io.Serializable;

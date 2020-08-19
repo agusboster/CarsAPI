@@ -1,4 +1,6 @@
-package com.exercise.layers.Entities;
+package com.exercise.layers.Entities.Stat;
+
+import com.exercise.layers.Entities.Stat.Stat;
 
 import java.util.List;
 

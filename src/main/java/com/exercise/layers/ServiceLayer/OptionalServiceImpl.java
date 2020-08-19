@@ -1,7 +1,8 @@
 package com.exercise.layers.ServiceLayer;
 
-import com.exercise.layers.Entities.Optional;
-import com.exercise.layers.Entities.Stat;
+import com.exercise.layers.Entities.Car.Car;
+import com.exercise.layers.Entities.Optional.Optional;
+import com.exercise.layers.Entities.Stat.Stat;
 import com.exercise.layers.RepositoryLayer.OptionalRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
 @Service("optionalService")
@@ -26,6 +28,13 @@ public class OptionalServiceImpl implements OptionalService {
         List<Optional> optionals = new ArrayList<>();
         Iterable<Optional> iterableOptionals = optionalRepo.findAllByCarId(_carId);
         iterableOptionals.forEach(optional -> optionals.add(optional));
+        return optionals;
+    }
+
+    public List<Optional> findAllByName(String _name) {
+        List<Optional> optionals = new ArrayList<>();
+        Iterable<Optional> optionalsAux = optionalRepo.findAllByName(_name);
+        optionalsAux.forEach(optionalAux -> optionals.add(optionalAux));
         return optionals;
     }
 
@@ -58,7 +67,24 @@ public class OptionalServiceImpl implements OptionalService {
     }
 
     public List<Stat> getOptionalsStats() {
-        return null;
+        List<Stat> stats = new ArrayList<>();
+        int totalOptionals = getAllOptionals().size();
+        getOptionalStats("tc", stats, totalOptionals);
+        getOptionalStats("aa", stats, totalOptionals);
+        getOptionalStats("abs", stats, totalOptionals);
+        getOptionalStats("ab", stats, totalOptionals);
+        getOptionalStats("ll", stats, totalOptionals);
+        return stats;
     }
+
+
+    public void getOptionalStats(String _optionalName, List<Stat> stats, int totalOptionals){
+        int totalOptional = findAllByName(_optionalName).size();
+        float percent = (totalOptional *100)/totalOptionals;
+        Stat carStats = new Stat(_optionalName, totalOptional, percent);
+        stats.add(carStats);
+    }
+
+
 
 }

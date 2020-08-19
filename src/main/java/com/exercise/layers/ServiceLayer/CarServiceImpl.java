@@ -1,8 +1,8 @@
 package com.exercise.layers.ServiceLayer;
 
-import com.exercise.layers.Entities.Car;
-import com.exercise.layers.Entities.Optional;
-import com.exercise.layers.Entities.Stat;
+import com.exercise.layers.Entities.Car.Car;
+import com.exercise.layers.Entities.Optional.Optional;
+import com.exercise.layers.Entities.Stat.Stat;
 import com.exercise.layers.Exceptions.CarException;
 import com.exercise.layers.RepositoryLayer.CarRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Service("carService")
 @Transactional
@@ -98,7 +99,26 @@ public class CarServiceImpl implements CarService {
     }
 
     public List<Stat> getCarsStats() {
-        return null;
+        List<Stat> stats = new ArrayList<>();
+        int totalCars = getAllCars().get().size();
+        getCarStats("sedan", stats, totalCars);
+        getCarStats("family", stats, totalCars);
+        getCarStats("coupe", stats, totalCars);
+        return stats;
+    }
+
+    public List<Car> getAllCarsByType(String _type) {
+        List<Car> cars = new ArrayList<>();
+        Iterable<Car> carsAux = carRepository.findAllByType(_type);
+        carsAux.forEach(carAux -> cars.add(carAux));
+        return cars;
+    }
+
+    public void getCarStats(String carType, List<Stat> stats, int totalCars){
+        int totalCar = getAllCarsByType(carType).size();
+        float percent = (totalCar *100)/totalCars;
+        Stat carStats = new Stat(carType, totalCar, percent);
+        stats.add(carStats);
     }
 
 

@@ -1,8 +1,8 @@
 package com.exercise.layers.ControllerLayer;
 
-import com.exercise.layers.Entities.Car;
-import com.exercise.layers.Entities.Stat;
-import com.exercise.layers.Entities.StatsDTO;
+import com.exercise.layers.Entities.Car.Car;
+import com.exercise.layers.Entities.Stat.Stat;
+import com.exercise.layers.Entities.Stat.StatsDTO;
 import com.exercise.layers.Exceptions.CarException;
 import com.exercise.layers.ServiceLayer.CarService;
 import com.exercise.layers.ServiceLayer.OptionalService;
@@ -11,7 +11,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 

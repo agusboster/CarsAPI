@@ -1,7 +1,7 @@
 package com.example.demo;
 
 
-import com.exercise.layers.Entities.Car;
+import com.exercise.layers.Entities.Car.Car;
 import com.exercise.layers.Exceptions.CarException;
 import com.exercise.layers.ServiceLayer.CarService;
 import org.junit.*;
