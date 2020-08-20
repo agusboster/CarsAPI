@@ -9,12 +9,13 @@ import com.exercise.layers.ServiceLayer.OptionalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
 
-@RestController
+@Controller
 @RequestMapping("/carsAPI")
 public class CarController {
     private CarService carService;
@@ -24,6 +25,12 @@ public class CarController {
     public CarController(CarService _carService, OptionalService _optionalService){
         this.carService=_carService;
         this.optionalService=_optionalService;
+    }
+
+    @GetMapping(path="/hola")
+    public @ResponseBody String welcome() {
+        // This returns a JSON or XML with the users
+        return "Bienvenidos!";
     }
 
     @PostMapping(path = "/", consumes = "application/json", produces = {"application/json"})
@@ -57,7 +64,7 @@ public class CarController {
     }
 
 
-    @GetMapping(path = "/{_id}", produces = {"application/json"})
+    @GetMapping(path = "/cars/{_id}", produces = {"application/json"})
     public ResponseEntity<Object> getCarById(@PathVariable("_id") String _id){
         if(_id.isBlank()){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Car id should be provided.");
@@ -73,7 +80,7 @@ public class CarController {
     }
 
 
-    @GetMapping(path = "/cars", consumes = "application/json", produces = {"application/json"})
+    @GetMapping(path = "/getAll", consumes = "application/json", produces = {"application/json"})
     public ResponseEntity<Object> getAllCars(){
         Optional<List<Car>> carsAux = carService.getAllCars();
         try {
