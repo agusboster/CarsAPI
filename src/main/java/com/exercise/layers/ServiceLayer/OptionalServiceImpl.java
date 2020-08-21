@@ -55,7 +55,10 @@ public class OptionalServiceImpl implements OptionalService {
     public void updateOrSaveOptionalByCar(Integer _carId, Optional _carOptional){
         java.util.Optional<Optional> optionalAux = optionalRepo.findByNameAndCarId(_carId, _carOptional.getName());
         if(optionalAux.isEmpty()){
-            _carOptional.setId(null);
+            optionalAux = optionalRepo.findById(_carOptional.getId());
+            if(optionalAux.isEmpty()){
+                _carOptional.setId(null);
+            }
         }
         optionalRepo.save(_carOptional);
     }
@@ -85,6 +88,18 @@ public class OptionalServiceImpl implements OptionalService {
         stats.add(carStats);
     }
 
+    public void deleteOptional(Integer optionalId) {
+        //Faltaria agregar el lanzamiento de excepcion por si no existe el optional, pero en este
+        //contexto no va a suceder.
+        optionalRepo.deleteById(optionalId);
+    }
+
+    public void deleteCarOptionals(Integer carId) {
+        List<Optional> carOptionals = findAllByCarId(carId);
+        if(!carOptionals.isEmpty()){
+            carOptionals.forEach(optional -> deleteOptional(optional.getId()));
+        }
+    }
 
 
 }

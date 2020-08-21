@@ -26,6 +26,10 @@ public class Car implements Serializable {
         this.basicPrice = _basicPrice;
     }
 
+    public Car(){
+        super();
+    }
+
 
     public Integer getId() {
         return id;

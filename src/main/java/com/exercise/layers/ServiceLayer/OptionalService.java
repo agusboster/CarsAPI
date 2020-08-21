@@ -15,4 +15,6 @@ public interface OptionalService {
     Float getOptionalsPrice(List<Optional> optionals);
     List<Stat> getOptionalsStats();
     void getOptionalStats(String _optionalName, List<Stat> stats, int totalOptionals);
+    void deleteOptional(Integer optionalId);
+    void deleteCarOptionals(Integer carId);
 }

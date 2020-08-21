@@ -22,6 +22,10 @@ public class Optional implements Serializable {
         this.price = _price;
     }
 
+    public Optional(){
+        super();
+    }
+
     public Integer getId() {
         return id;
     }

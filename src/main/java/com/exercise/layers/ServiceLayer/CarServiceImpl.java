@@ -31,8 +31,11 @@ public class CarServiceImpl implements CarService {
         if(_car.getId() != null){
             _car.setId(null);
         }
-        updateOrSaveOptionals(_car.getId(), _car.getOptionals());
-        return carRepository.save(_car);
+        List<Optional> carOptionals = _car.getOptionals();
+        Car savedCar = carRepository.save(_car);
+        carOptionals.forEach(optional -> optional.setCarId(savedCar.getId()));
+        updateOrSaveOptionals(savedCar.getId(), carOptionals);
+        return savedCar;
     }
 
     public void deleteCar(Integer _carId) throws CarException{
@@ -41,6 +44,7 @@ public class CarServiceImpl implements CarService {
             throw new CarException("The car with id " + _carId + " didn't exist before the request. The deleting" +
                     "operation is not necessary.");
         }
+        optionalService.deleteCarOptionals(_carId);
         carRepository.deleteById(_carId);
     }
 

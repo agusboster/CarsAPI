@@ -36,13 +36,15 @@ public class CarController {
     @PostMapping(path = "/", consumes = "application/json", produces = {"application/json"})
     public ResponseEntity<Object> saveCar (@RequestBody Car newCar){
         Car savedCar = carService.saveCar(newCar);
-        return ResponseEntity.status(HttpStatus.OK).body(savedCar);
+        Car responseCar = carService.findById(savedCar.getId()).get();
+        return ResponseEntity.status(HttpStatus.OK).body(responseCar);
     }
 
     @PutMapping(path = "/", consumes = "application/json", produces = {"application/json"})
     public ResponseEntity<Object> updateCar(@RequestBody Car car){
         try {
-            Car responseCar = carService.updateCar(car);
+            Car updatedCar = carService.updateCar(car);
+            Car responseCar = carService.findById(updatedCar.getId()).get();
             return ResponseEntity.status(HttpStatus.OK).body(responseCar);
         } catch (CarException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
