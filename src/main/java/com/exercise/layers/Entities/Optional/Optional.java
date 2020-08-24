@@ -57,4 +57,11 @@ public class Optional implements Serializable {
     public void setPrice(Float newPrice) {
         this.price = newPrice;
     }
+
+    public boolean equals (Optional anotherOptional){
+        return this.id.toString() == anotherOptional.getId().toString() &&
+                this.carId.toString() == anotherOptional.getCarId().toString() &&
+                this.name == anotherOptional.getName() &&
+                this.price.toString() == anotherOptional.getPrice().toString();
+    }
 }

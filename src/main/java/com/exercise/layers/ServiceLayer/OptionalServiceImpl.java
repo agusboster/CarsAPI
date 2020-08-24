@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.stream.Collectors;
 
 @Service("optionalService")
 @Transactional
@@ -59,8 +60,8 @@ public class OptionalServiceImpl implements OptionalService {
             if(optionalAux.isEmpty()){
                 _carOptional.setId(null);
             }
+            optionalRepo.save(_carOptional);
         }
-        optionalRepo.save(_carOptional);
     }
 
     public Float getOptionalsPrice(List<Optional> optionals) {
