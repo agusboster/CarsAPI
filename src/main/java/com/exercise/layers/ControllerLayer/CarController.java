@@ -53,7 +53,7 @@ public class CarController {
 
     @DeleteMapping(path = "/{_id}", produces = {"application/json"})
     public ResponseEntity<Object> deleteCar (@PathVariable("_id") String _id){
-        if(_id.isBlank()){
+        if(_id == null || _id == ""){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Car id should be provided.");
         }
         Integer carId = Integer.valueOf(_id);
@@ -68,7 +68,7 @@ public class CarController {
 
     @GetMapping(path = "/cars/{_id}", produces = {"application/json"})
     public ResponseEntity<Object> getCarById(@PathVariable("_id") String _id){
-        if(_id.isBlank()){
+        if(_id == null || _id == ""){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Car id should be provided.");
         }
         Integer carId = Integer.valueOf(_id);
@@ -95,7 +95,7 @@ public class CarController {
 
     @GetMapping(path = "/carPrice/{_id}", consumes = "application/json", produces = {"application/json"})
     public ResponseEntity<Object> getCarPrice(@PathVariable("_id") String _id){
-        if(_id.isBlank()){
+        if(_id == null || _id == ""){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Car id should be provided.");
         }
         Integer carId = Integer.valueOf(_id);

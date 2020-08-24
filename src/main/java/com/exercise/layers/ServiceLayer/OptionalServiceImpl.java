@@ -55,9 +55,9 @@ public class OptionalServiceImpl implements OptionalService {
 
     public void updateOrSaveOptionalByCar(Integer _carId, Optional _carOptional){
         java.util.Optional<Optional> optionalAux = optionalRepo.findByNameAndCarId(_carId, _carOptional.getName());
-        if(optionalAux.isEmpty()){
+        if(!optionalAux.isPresent()){
             optionalAux = optionalRepo.findById(_carOptional.getId());
-            if(optionalAux.isEmpty()){
+            if(!optionalAux.isPresent()){
                 _carOptional.setId(null);
             }
             optionalRepo.save(_carOptional);

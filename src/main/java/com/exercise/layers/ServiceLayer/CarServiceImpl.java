@@ -40,7 +40,7 @@ public class CarServiceImpl implements CarService {
 
     public void deleteCar(Integer _carId) throws CarException{
         java.util.Optional<Car> carAux = carRepository.findById(_carId);
-        if(carAux.isEmpty()){
+        if(!carAux.isPresent()){
             throw new CarException("The car with id " + _carId + " didn't exist before the request. The deleting" +
                     "operation is not necessary.");
         }
@@ -50,7 +50,7 @@ public class CarServiceImpl implements CarService {
 
     public Car updateCar(Car _car) throws CarException {
         java.util.Optional<Car> carAux = carRepository.findById(_car.getId());
-        if(carAux.isEmpty()){
+        if(!carAux.isPresent()){
             if(_car.getId() == null){
                 throw new CarException("Please provide the car Id that you would like to update.");
             } else{
@@ -64,7 +64,7 @@ public class CarServiceImpl implements CarService {
 
     public Float getCarPrice(Integer _id) throws CarException{
         java.util.Optional<Car> carAux = findById(_id);
-        if(carAux.isEmpty()){
+        if(!carAux.isPresent()){
             throw new CarException("There is not any car with id " + _id);
         }
         Float basicPrice = carAux.get().getBasicPrice();
@@ -76,7 +76,7 @@ public class CarServiceImpl implements CarService {
     ///Manejar la posible exception en el controller
     public java.util.Optional<Car> findById(Integer _carId){
         java.util.Optional<Car> carAux = carRepository.findById(_carId);
-        if(carAux.isEmpty()){
+        if(!carAux.isPresent()){
             return carAux;
         }
         Car car = carAux.get();
