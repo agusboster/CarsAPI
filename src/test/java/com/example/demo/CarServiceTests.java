@@ -2,6 +2,7 @@ package com.example.demo;
 
 
 import com.exercise.layers.Entities.Car.Car;
+import com.exercise.layers.Entities.Stat.Stat;
 import com.exercise.layers.Exceptions.CarException;
 import com.exercise.layers.ServiceLayer.CarService;
 import org.junit.*;
@@ -67,6 +68,12 @@ public class CarServiceTests {
     public final void testGetAll() {
         List<Car> testList = this.carService.getAllCars().get();
         assertTrue("Since there are test data in DB, list should not be empty", !testList.isEmpty());
+    }
+
+    @Test
+    public final void testGetStats() {
+        List<Stat> stats = this.carService.getCarsStats();
+        assertTrue("Since there are test data in DB, list should not be empty", !stats.isEmpty());
     }
 
     @Rule

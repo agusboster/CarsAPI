@@ -89,7 +89,7 @@ public class CarController {
             List<Car> cars = carsAux.get();
             return ResponseEntity.status(HttpStatus.OK).body(cars);
         } catch (Exception e){
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Something went wrong. Error message: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("There are not any cars in the db.");
         }
     }
 

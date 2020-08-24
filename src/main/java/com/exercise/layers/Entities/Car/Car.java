@@ -22,7 +22,6 @@ public class Car implements Serializable {
         this.id = _id;
         this.model = _model;
         this.type = _type;
-        //this.optionals = _optionals;
         this.basicPrice = _basicPrice;
     }
 
